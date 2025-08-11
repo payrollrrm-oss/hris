@@ -4,91 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem HRIS - Manajemen Karyawan</title>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="script.min.js" as="script">
+    <link rel="preload" href="config.js" as="script">
+    <!-- Cache control -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+        <div class="spinner"></div>
     </div>
 
     <!-- Login Screen -->
-    <div id="loginScreen" class="container-fluid login-container">
-        <div class="row justify-content-center align-items-center min-vh-100">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow-lg">
-                    <div class="card-body p-5">
-                        <div class="text-center mb-4">
-                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                            <h2 class="fw-bold">HRIS System</h2>
-                            <p class="text-muted">Silakan login untuk melanjutkan</p>
-                        </div>
-                        <form id="loginForm">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-sign-in-alt me-2"></i>Login
-                            </button>
-                        </form>
-                        <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
-                    </div>
+    <div id="loginScreen" style="display: none;">
+        <div class="login-container">
+            <h2><i class="fas fa-user-circle"></i> Login HRIS</h2>
+            <form onsubmit="login(); return false;">
+                <div class="form-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" id="emailInput" class="form-control" placeholder="Masukkan email" required>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
         </div>
     </div>
 
     <!-- Main Application -->
-    <div id="mainApp" class="d-none">
+    <div id="mainApp" style="display: none;">
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <i class="fas fa-users me-2"></i>HRIS System
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="menu-toggle d-lg-none" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto" id="navMenu">
-                        <!-- Menu items will be populated based on user role -->
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-user me-1"></i><span id="userName">User</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" id="logoutBtn">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
-                                </a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                <span class="navbar-brand">Sistem HRIS</span>
+                <div class="nav-user">
+                    <div class="user-info">
+                        <div class="user-name" id="userName"></div>
+                        <div class="user-role" id="userRole"></div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
             </div>
         </nav>
 
-        <!-- Main Content -->
-        <div class="container-fluid mt-4">
-            <div id="contentArea">
-                <!-- Content will be loaded here -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 col-md-4 sidebar" id="sidebar">
+                    <div id="menuContainer">
+                        <!-- Menu items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="col-lg-9 col-md-8 content-area" id="contentArea">
+                    <!-- Content will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modals -->
     <!-- Employee Modal -->
     <div class="modal fade" id="employeeModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="employeeModalTitle">Tambah Karyawan</h5>
+                    <h5 class="modal-title">Data Karyawan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -187,7 +179,7 @@
                             <input type="date" class="form-control" id="attendanceDate" required>
                         </div>
                         <div class="mb-3">
-                            <label for="attendanceStatus" class="form-label">Status Absensi</label>
+                            <label for="attendanceStatus" class="form-label">Status</label>
                             <select class="form-select" id="attendanceStatus" required>
                                 <option value="">Pilih Status</option>
                                 <option value="Hadir Masuk">Hadir Masuk</option>
@@ -200,23 +192,23 @@
                                 <option value="MCU">MCU</option>
                             </select>
                         </div>
-                        <div class="mb-3" id="shiftGroup" style="display: none;">
-                            <label for="shift" class="form-label">Shift</label>
-                            <select class="form-select" id="shift">
+                        <div class="mb-3">
+                            <label for="attendanceShift" class="form-label">Shift</label>
+                            <select class="form-select" id="attendanceShift" required>
                                 <option value="">Pilih Shift</option>
                                 <option value="Shift 1">Shift 1</option>
                                 <option value="Shift 2">Shift 2</option>
                             </select>
                         </div>
-                        <div class="mb-3" id="cutiGroup" style="display: none;">
+                        <div class="mb-3" id="cutiDateGroup" style="display: none;">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="cutiStart" class="form-label">Tanggal Awal Cuti</label>
-                                    <input type="date" class="form-control" id="cutiStart">
+                                    <label for="cutiStartDate" class="form-label">Tanggal Mulai Cuti</label>
+                                    <input type="date" class="form-control" id="cutiStartDate">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="cutiEnd" class="form-label">Tanggal Akhir Cuti</label>
-                                    <input type="date" class="form-control" id="cutiEnd">
+                                    <label for="cutiEndDate" class="form-label">Tanggal Selesai Cuti</label>
+                                    <input type="date" class="form-control" id="cutiEndDate">
                                 </div>
                             </div>
                         </div>
@@ -280,8 +272,8 @@
                 <div class="modal-body">
                     <form id="mcuForm">
                         <div class="mb-3">
-                            <label for="mcuDate" class="form-label">Tanggal Permohonan</label>
-                            <input type="date" class="form-control" id="mcuDate" required>
+                            <label for="mcuRequestDate" class="form-label">Tanggal Permohonan</label>
+                            <input type="date" class="form-control" id="mcuRequestDate" required>
                         </div>
                         <div class="mb-3">
                             <label for="mcuReason" class="form-label">Alasan MCU</label>
@@ -406,7 +398,7 @@
     <!-- Configuration -->
     <script src="config.js"></script>
     <!-- Google Apps Script API -->
-    <script src="script.js"></script>
+    <script src="script.min.js"></script>
     <script src="modules.js"></script>
     <script src="functions.js"></script>
 </body>
