@@ -1,0 +1,142 @@
+/**
+ * Konfigurasi Aplikasi HRIS
+ * 
+ * File ini berisi semua konfigurasi yang diperlukan untuk aplikasi HRIS
+ * Sesuaikan nilai-nilai di bawah ini sesuai dengan setup Anda
+ */
+
+const CONFIG = {
+    // URL Google Apps Script Web App (ganti dengan URL Anda setelah deploy)
+    SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
+    
+    // Konfigurasi aplikasi
+    APP_NAME: 'HRIS System',
+    APP_VERSION: '1.0.0',
+    APP_DESCRIPTION: 'Sistem Human Resource Information System',
+    
+    // Konfigurasi database
+    SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID',
+    
+    // Nama-nama sheet di Google Spreadsheet
+    SHEETS: {
+        EMPLOYEES: 'DataKaryawan',
+        ATTENDANCE: 'Absensi',
+        K3_REPORTS: 'LaporanK3',
+        MCU_REQUESTS: 'PermohonanMCU',
+        APD_REQUESTS: 'PermintaanAPD'
+    },
+    
+    // Konfigurasi status
+    STATUS: {
+        EMPLOYEE: {
+            ACTIVE: 'Aktif',
+            INACTIVE: 'Nonaktif'
+        },
+        ATTENDANCE: {
+            PRESENT_IN: 'Hadir Masuk',
+            PRESENT_OUT: 'Hadir Pulang',
+            OFF: 'Off',
+            SICK: 'Sakit',
+            ALPHA: 'Alfa',
+            LEAVE: 'Cuti',
+            INDUCTION: 'Induksi',
+            MCU: 'MCU'
+        },
+        K3: {
+            PENDING: 'Belum',
+            COMPLETED: 'Selesai'
+        },
+        REQUEST: {
+            PENDING: 'Pending',
+            APPROVED: 'Disetujui',
+            REJECTED: 'Ditolak'
+        }
+    },
+    
+    // Konfigurasi shift
+    SHIFTS: {
+        SHIFT_1: 'Shift 1',
+        SHIFT_2: 'Shift 2'
+    },
+    
+    // Konfigurasi role
+    ROLES: {
+        ADMIN: 'admin',
+        EMPLOYEE: 'karyawan'
+    },
+    
+    // Konfigurasi marital status
+    MARITAL_STATUS: {
+        SINGLE: 'Lajang',
+        MARRIED: 'Menikah',
+        DIVORCED: 'Cerai'
+    },
+    
+    // Konfigurasi APD
+    APD: {
+        SHIRT_SIZES: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        PANTS_SIZES: ['28', '30', '32', '34', '36', '38', '40'],
+        HELMET_COLORS: ['Putih', 'Kuning', 'Merah', 'Biru', 'Hijau'],
+        GLASSES_OPTIONS: ['Ya', 'Tidak']
+    },
+    
+    // Konfigurasi UI
+    UI: {
+        ITEMS_PER_PAGE: 10,
+        AUTO_REFRESH_INTERVAL: 30000, // 30 detik
+        ALERT_DURATION: 5000, // 5 detik
+        LOADING_TIMEOUT: 10000 // 10 detik
+    },
+    
+    // Konfigurasi validasi
+    VALIDATION: {
+        EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        NRP_REGEX: /^[A-Z0-9]{3,10}$/,
+        PHONE_REGEX: /^[0-9]{10,15}$/,
+        MIN_PASSWORD_LENGTH: 6,
+        MAX_FILE_SIZE: 5 * 1024 * 1024 // 5MB
+    },
+    
+    // Konfigurasi pesan
+    MESSAGES: {
+        SUCCESS: {
+            LOGIN: 'Login berhasil',
+            SAVE: 'Data berhasil disimpan',
+            UPDATE: 'Data berhasil diupdate',
+            DELETE: 'Data berhasil dihapus',
+            LOGOUT: 'Logout berhasil'
+        },
+        ERROR: {
+            LOGIN_FAILED: 'Email tidak ditemukan dalam sistem',
+            SAVE_FAILED: 'Gagal menyimpan data',
+            UPDATE_FAILED: 'Gagal mengupdate data',
+            DELETE_FAILED: 'Gagal menghapus data',
+            NETWORK_ERROR: 'Terjadi kesalahan jaringan',
+            SERVER_ERROR: 'Terjadi kesalahan server',
+            VALIDATION_ERROR: 'Data tidak valid',
+            PERMISSION_DENIED: 'Anda tidak memiliki akses'
+        },
+        CONFIRM: {
+            DELETE: 'Apakah Anda yakin ingin menghapus data ini?',
+            LOGOUT: 'Apakah Anda yakin ingin logout?',
+            UNSAVED_CHANGES: 'Ada perubahan yang belum disimpan. Lanjutkan?'
+        }
+    },
+    
+    // Konfigurasi tema
+    THEME: {
+        PRIMARY_COLOR: '#667eea',
+        SECONDARY_COLOR: '#764ba2',
+        SUCCESS_COLOR: '#56ab2f',
+        WARNING_COLOR: '#f093fb',
+        DANGER_COLOR: '#ff416c',
+        INFO_COLOR: '#667eea',
+        LIGHT_COLOR: '#f8f9fa',
+        DARK_COLOR: '#333'
+    }
+};
+
+// Export konfigurasi untuk digunakan di file lain
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CONFIG;
+}
