@@ -13,7 +13,7 @@
  */
 
 // Konfigurasi Spreadsheet ID (ganti dengan ID spreadsheet Anda)
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID';
+const SPREADSHEET_ID = '1reJE02HnF1HONZYvx377xpHeOi4at2-GrHyMNeoepmI';
 
 // Nama-nama sheet
 const SHEETS = {

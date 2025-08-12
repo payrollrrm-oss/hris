@@ -7,7 +7,7 @@
 
 const CONFIG = {
     // URL Google Apps Script Web App (ganti dengan URL Anda setelah deploy)
-    SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
+    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyPVQbMR-p2XQ_tjnnwhSnpVmWwlfGKoGssOYV8UkSXY0snUt_NK5-G0f6Yk_oc0UEF/exec',
     
     // Konfigurasi aplikasi
     APP_NAME: 'HRIS System',
@@ -15,7 +15,7 @@ const CONFIG = {
     APP_DESCRIPTION: 'Sistem Human Resource Information System',
     
     // Konfigurasi database
-    SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID',
+    SPREADSHEET_ID: 'https://script.google.com/macros/s/AKfycbyPVQbMR-p2XQ_tjnnwhSnpVmWwlfGKoGssOYV8UkSXY0snUt_NK5-G0f6Yk_oc0UEF/exec',
     
     // Nama-nama sheet di Google Spreadsheet
     SHEETS: {
